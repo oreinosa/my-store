@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "my-bakery-6c7d1": {
+      "hosting": {
+        "my-store": [
+          "my-bakery-6c7d1"
+        ]
+      }
+    }
+  }
+}
