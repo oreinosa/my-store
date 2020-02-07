@@ -9,7 +9,22 @@
         </a>
       </ng-container>
       <mat-divider></mat-divider>
-      
+      <ng-container *ngIf='!user; else loggedIn'>
+        <a mat-list-item (click)='openDialog("login")'>
+          Login
+        </a>
+        <a mat-list-item (click)='openDialog("register")'>
+          Register
+        </a>
+      </ng-container>
+      <ng-template #loggedIn>
+        <a mat-list-item routerLink='profile' routerLinkActive='active'>
+          My profile
+        </a>
+        <a mat-list-item (click)='openDialog("logout")'>
+          Logout
+        </a>
+      </ng-template>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

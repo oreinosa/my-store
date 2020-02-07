@@ -76,7 +76,7 @@ export class NavigationComponent {
         break;
     }
 
-    if (component) this.dialog.open(component);
+    if (component) this.dialog.open(component, { width: "500px" });
   }
 
 }
