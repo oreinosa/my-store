@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
   ],
   imports: [
     BrowserModule,
+    AuthModule,
     CoreModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
