@@ -18,7 +18,7 @@ export class AddProductComponent implements OnInit {
   ngOnInit() {
   }
 
-  selectProduct(name: string, amount: number, price: string) {
+  selectProduct(name: string, amount: number, price: number) {
     this.orderService.addRecord({ name, amount, price });
   }
 
