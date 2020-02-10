@@ -21,7 +21,7 @@ export class ProductsComponent extends List<Category>  {
     super(
       dao,
       dialog,
-      ["name", "description","category", "actions"],
+      ["name", "description", "price", "category", "actions"],
       AddComponent,
       UpdateComponent,
       DeleteComponent

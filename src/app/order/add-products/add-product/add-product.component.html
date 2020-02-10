@@ -1,0 +1,28 @@
+<div class="row m-3">
+  <div class="col-12">
+    <h6>{{ product.name }}</h6>
+    <h6>{{ product.price | currency }} x {{ amount }} = {{ (product.price * amount) |currency }}</h6>
+  </div>
+  <div class="col-12">
+    <div class="row  text-center">
+      <div class="col-4">
+        <button mat-icon-button (click)='amount = amount - 1' [disabled]='amount === 1'>
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>
+      <div class="col-4">
+        <mat-form-field class='full-width'>
+          <input matInput type="number" [(ngModel)]='amount' name='amount' min='1' max='25'>
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <button mat-icon-button (click)='amount = amount + 1' [disabled]='amount >= 25'>
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="col-12 add-product" (click)='selectProduct(product.name, amount, product.price)'>
+        Add x{{ amount }} {{ product.name }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,15 +4,16 @@ import { NgModule } from '@angular/core';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersComponent } from './orders.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
-import { AttendOrderComponent } from './attend-order/attend-order.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 
 @NgModule({
-  declarations: [OrdersComponent, ViewOrderComponent, AttendOrderComponent],
+  declarations: [OrdersComponent, ViewOrderComponent, OrderDetailsComponent],
   imports: [
     SharedModule,
     OrdersRoutingModule
   ],
-  entryComponents:[ViewOrderComponent]
+  entryComponents:[ViewOrderComponent],
+  exports:[OrderDetailsComponent]
 })
 export class OrdersModule { }

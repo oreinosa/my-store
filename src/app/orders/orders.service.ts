@@ -19,8 +19,12 @@ export class OrdersService {
     this.ordersCollection = this.af.collection('orders');
   }
 
-  getActiveOrder(): Observable<Order> {
-    return this.currentOrder.asObservable();
+  getOrder(id: string): Observable<Order> {
+    this.orderDocument = this.ordersCollection.doc(id);
+    return this.orderDocument.valueChanges().pipe(
+      map(order => {
+        return { ...order, id }
+      }));
   }
 
   setActiveOrder(order: Order): void {
@@ -45,8 +49,9 @@ export class OrdersService {
     );
   }
 
-  getOrder(): Observable<Order> {
-    return null;
+  getActiveOrder(id?: string): Observable<Order> {
+    const currentOrder = this.currentOrder.getValue();
+    return currentOrder ? this.getActiveOrder() : this.getOrder(id);
   }
 
   getOrderProducts(id: string): Observable<Product[]> {

@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ViewOrderComponent } from './view-order/view-order.component';
 import { OrdersService } from './orders.service';
 import { Order } from './../shared/models/order.model';
@@ -19,18 +19,19 @@ export class OrdersComponent implements OnInit {
   constructor(
     private ordersService: OrdersService,
     private dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router:Router
   ) { }
 
   ngOnInit() {
-    this.ordersService.getActiveOrder().pipe(
-      takeUntil(this.ngUnsubscribe)
-    )
-      .subscribe(order => {
-        if (order) {
-          this.onViewOrder(order);
-        }
-      })
+    // this.ordersService.getActiveOrder().pipe(
+    //   takeUntil(this.ngUnsubscribe)
+    // )
+    //   .subscribe(order => {
+    //     if (order) {
+    //       this.onViewOrder(order);
+    //     }
+    //   })
 
     this.ordersService.getActiveOrders().pipe(
       takeUntil(this.ngUnsubscribe),
@@ -46,6 +47,11 @@ export class OrdersComponent implements OnInit {
 
   onViewOrder(order: Order) {
     this.dialog.open(ViewOrderComponent, { data: order });
+  }
+
+  onAttendOrder(order: Order) {
+    this.ordersService.setActiveOrder(order);
+    this.router.navigate(['/orders', order.id]);
   }
 
 }

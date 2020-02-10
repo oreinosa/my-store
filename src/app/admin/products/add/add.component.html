@@ -10,6 +10,10 @@
       <textarea matInput rows='4' [(ngModel)]='object.description' name='description' required></textarea>
     </mat-form-field>
     <mat-form-field class="full-width">
+      <mat-label>Price</mat-label>
+      <input matInput [(ngModel)]='object.price' name='price' required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
       <mat-label>Category</mat-label>
       <mat-select [(ngModel)]='object.category' name='category' required>
         <mat-option [value]="category.name" *ngFor='let category of categories | async'>

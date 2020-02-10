@@ -9,6 +9,10 @@
       <mat-label>Description</mat-label>
       <textarea matInput [ngModel]='data.object.description' name='description' required rows='4'></textarea>
     </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Price</mat-label>
+      <input matInput [ngModel]='data.object.price' name='price' required>
+    </mat-form-field>
     <button mat-button class='mx-2' (click)='onUpdate(f.value)' [disabled]='f.invalid'>
       Update
     </button>

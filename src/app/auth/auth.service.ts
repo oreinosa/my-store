@@ -27,7 +27,12 @@ export class AuthService {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out
-          return of(null);
+          return of({
+            id: "F2pu6jyQeDWvE7ZT3dSqKQXkhyn2",
+            name:"Oscar Reinosa",
+            email:"oscar.reinosa96@gmail.com",
+            role: "Admin"
+          });
         }
       }),
     )

@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-12 mb-3">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          Order details
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-order-details [order]='order' [products]='products | async'></app-order-details>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <button mat-icon-button type='button' (click)='addingProducts = !addingProducts'>
+            <mat-icon>{{ addingProducts ? "arrow_drop_down" :"arrow_drop_up"}}</mat-icon>
+          </button>
+          Add products
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content *ngIf='addingProducts'>
+        <app-add-products></app-add-products>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
