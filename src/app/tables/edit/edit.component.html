@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-12">
+    <div class="grid-horizontal">
+      <h6>
+        Grid horizontal :
+        <button mat-icon-button (click)='gridX = gridX-1;generateGrid()'>
+          <mat-icon>remove</mat-icon>
+        </button>
+        {{ gridX }}
+        <button mat-icon-button (click)='gridX = gridX+1;generateGrid()'>
+          <mat-icon>add</mat-icon>
+        </button>
+      </h6>
+    </div>
+
+    <h6>
+      Grid vertical :
+      <button mat-icon-button (click)='gridY = gridY-1;generateGrid()'>
+        <mat-icon>remove</mat-icon>
+      </button>
+      {{ gridY }}
+      <button mat-icon-button (click)='gridY = gridY+1;generateGrid()'>
+        <mat-icon>add</mat-icon>
+      </button>
+    </h6>
+    <div class='my-3'>
+      <button mat-button (click)='onSave()'>Save</button>
+    </div>
+  </div>
+  <div class="col-12 text-center">
+    <!-- FIRST ROW FOR COLUMN INDEX -->
+    <div class='row'>
+      <div class="border cell index-cell" style='width:5%'>
+      </div>
+      <ng-container *ngFor='let col of grid[0];let i=index'>
+        <div class="border cell index-cell" [ngStyle]="{'width.%': width}">
+          {{ i }}
+        </div>
+      </ng-container>
+    </div>
+    <!-- CREATE ROWS FOR GRID -->
+    <ng-container *ngFor='let row of grid;let i=index'>
+      <div class="row">
+        <!-- FIRST COLUMN FOR ROW INDEX -->
+        <div class="border cell index-cell" style='width:5%'>
+          {{ i }}
+        </div>
+        <!-- TABLE COLUMNS -->
+        <ng-container *ngFor='let col of row;let k=index'>
+          <div class="border cell" [ngStyle]="{'width.%': width}" [ngClass]='!!col ? "active":""' (click)='onSelectCell(k, i, col)'>
+            {{ col?.label }}
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>

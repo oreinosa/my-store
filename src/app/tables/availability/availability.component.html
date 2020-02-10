@@ -1,0 +1,48 @@
+<div class="row">
+  <ng-container *ngIf='grid.length;else loadingGrid'>
+    <div class="col-12 text-center">
+      <!-- FIRST ROW FOR COLUMN INDEX -->
+      <div class='row'>
+        <div class="border cell index-cell" style='width:5%'>
+        </div>
+        <ng-container *ngFor='let col of grid[0];let i=index'>
+          <div class="border cell index-cell" [ngStyle]="{'width.%': width}">
+            {{ i }}
+          </div>
+        </ng-container>
+      </div>
+      <!-- CREATE ROWS FOR GRID -->
+      <ng-container *ngFor='let row of grid;let i=index'>
+        <div class="row">
+          <!-- FIRST COLUMN FOR ROW INDEX -->
+          <div class="border cell index-cell" style='width:5%'>
+            {{ i }}
+          </div>
+          <!-- TABLE COLUMNS -->
+          <ng-container *ngFor='let table of row;let k=index'>
+            <div [ngStyle]="{'width.%': width}">
+              <ng-container *ngIf='table;else emptyCell'>
+                <button [matTooltip]='table.seats+" seats"' mat-button class="border cell table" [ngClass]='{"selected": table?.label === selectedTable?.label, "not-available": table.seats < guests }'
+                  (click)='onSelectTable(table)'>
+                  # {{ table?.label }}
+                </button>
+              </ng-container>
+              <ng-template #emptyCell>
+                <div class="border cell"></div>
+              </ng-template>
+
+            </div>
+
+
+
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template #loadingGrid>
+    <div class="col-12 mx-auto">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</div>

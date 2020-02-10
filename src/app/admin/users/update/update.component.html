@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Update {{ documentName }}</h1>
+<form #f='ngForm' *ngIf='data?.object'>
+  <div class="col-12 col-sm-10 col-md-9 col-lg-8 mx-auto crud-update">
+    <mat-form-field class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" [ngModel]='data.object.name' name='name' required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type='email' [ngModel]='data.object.email' name='email' required readonly>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Role</mat-label>
+      <input matInput type='text' [ngModel]='data.object.role' name='role' required readonly>
+    </mat-form-field>
+    <button mat-button class='mx-2' (click)='onUpdate(f.value)' [disabled]='f.invalid'>
+      Update
+    </button>
+    <button mat-button class='mx-2' mat-dialog-close>
+      Cancel
+    </button>
+  </div>
+</form>

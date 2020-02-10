@@ -1,0 +1,16 @@
+.menu-bar{
+  position: absolute;
+  right:0;
+  top:0;
+  min-width:10px;
+  height:100%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 4px;
+  &:hover{
+    background-color: rgba(0,0,0,0.06);
+    cursor: pointer;
+  }
+}
+.mat-tab-link{
+  text-decoration: none;
+}

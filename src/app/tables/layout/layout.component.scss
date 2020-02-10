@@ -1,0 +1,17 @@
+.cell{
+  min-height:50px;
+  &.active{
+    background-color: lightslategray;
+    cursor: pointer;
+    &:hover{
+      background-color:gray;
+    }
+   &.selected{
+    background-color: green;
+    }
+  }
+}
+.index-cell{
+  background-color: lightgray;
+  cursor: default;
+}

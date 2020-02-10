@@ -1,3 +1,4 @@
+import { AuthModule } from './../auth/auth.module';
 import { NgModule } from '@angular/core';
 
 import { CoreRoutingModule } from './core-routing.module';
@@ -12,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [NavigationComponent],
   imports: [
     SharedModule,
+    AuthModule,
     CoreRoutingModule,
     LayoutModule,
     MatToolbarModule,

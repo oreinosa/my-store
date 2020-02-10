@@ -1,0 +1,10 @@
+.cell{
+  height:50px;
+  &.selected{
+    background-color: green;
+  }
+  &.not-available{
+    cursor: not-allowed;
+    background-color: gray;
+  }
+}

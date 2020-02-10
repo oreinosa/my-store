@@ -1,1 +1,18 @@
-<p>admin works!</p>
+<div class="row mt-3">
+  <div class="col-12 col-md-10 col-lg-8 col-xl-6 mb-3 mx-auto">
+    <mat-card>
+      <h4 class="text-center">
+        Admin menu
+      </h4>
+      <nav mat-tab-nav-bar>
+        <a mat-tab-link *ngFor="let link of links" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+          <mat-icon>{{ link.icon }}</mat-icon>
+          {{ link.label }}
+        </a>
+      </nav>
+    </mat-card>
+  </div>
+  <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Add {{ documentName }}</h1>
+<form #f='ngForm'>
+  <div class="col-12 col-sm-10 col-md-9 col-lg-8 mx-auto crud-add">
+    <mat-form-field class="full-width">
+      <mat-label>Label</mat-label>
+      <input matInput type="text" [(ngModel)]='object.label' name='label' required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Seats</mat-label>
+      <input matInput type="number" [(ngModel)]='object.seats' name='seats' required>
+    </mat-form-field>
+    <button mat-button class='mx-2' (click)='onAdd(f.value)' [disabled]='f.invalid'>
+      Add
+    </button>
+    <button mat-button class='mx-2' mat-dialog-close>
+      Cancel
+    </button>
+  </div>
+</form>

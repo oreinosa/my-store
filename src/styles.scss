@@ -58,3 +58,49 @@ $my-store-theme: mat-light-theme($my-store-primary, $my-store-accent, $my-store-
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+$primary:#2f3c48;
+$secondary:#6f7f8c;
+$success:#3e4d59;
+$danger:#cc330d;
+$info:#5c8f94;
+$warning:#6e9fa5;
+$light:#eceeec;
+$dark:#1e2b37;
+$spacer:1rem;
+$border-width:1px;
+$btn-border-radius:.25rem;
+// Your variable overrides
+    $grid-breakpoints: (
+      xs: 0,
+      sm: 600px,
+      md: 960px,
+      lg: 1280px,
+      xl: 1980px
+    ) !default;
+
+
+// Bootstrap and its default variables
+@import "node_modules/bootstrap/scss/bootstrap";
+
+
+.full-width{
+  width:100%;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+.crud-list{
+  table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  td.mat-cell, th.mat-header-cell{
+    padding: 5px;
+  }
+}

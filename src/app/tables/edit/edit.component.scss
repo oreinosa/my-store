@@ -1,0 +1,15 @@
+.cell{
+  min-height:50px;
+  cursor: pointer;
+
+  &:hover, &.active{
+    background-color:gray;
+  }
+}
+.index-cell{
+  background-color: lightgray;
+  cursor: default;
+  &:hover{
+    background-color: lightgray;
+  }
+}

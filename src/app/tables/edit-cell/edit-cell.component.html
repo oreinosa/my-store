@@ -1,0 +1,10 @@
+<mat-form-field>
+  <mat-label>Select a table</mat-label>
+  <mat-select (selectionChange)='selectTable($event.value)'>
+    <mat-option *ngFor='let table of data' [value]='table'>
+      {{ table?.label }}
+    </mat-option>
+    <mat-option value="None">None</mat-option>
+
+  </mat-select>
+</mat-form-field>

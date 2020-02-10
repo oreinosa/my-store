@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
-import { Link } from 'src/app/shared/models/link.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/shared/models/user.model';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 import { RegisterComponent } from 'src/app/auth/register/register.component';
 import { LogoutComponent } from 'src/app/auth/logout/logout.component';
+import { Routes } from '../../auth/routes';
+import { ResetPasswordComponent } from '../../auth/reset-password/reset-password.component';
 
 @Component({
   selector: 'app-navigation',
@@ -18,7 +19,7 @@ import { LogoutComponent } from 'src/app/auth/logout/logout.component';
 export class NavigationComponent {
   user: User = null;
   screenSize = 4;
-  links: Link[] = [];
+  routes: Routes = null;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -57,26 +58,40 @@ export class NavigationComponent {
       window.scrollTo(0, 0);
     });
 
-    this.auth.user$.subscribe(user => this.user = user);
+    this.auth.getUser().pipe(
+      tap((user: User) => {
+        console.log("Logged in : ", user);
+      }))
+      .subscribe(user => this.user = user);
 
-    this.auth.getRoutes().subscribe(links => this.links = links);
+    this.auth.getRoutes().subscribe(routes => this.routes = routes);
   }
 
   openDialog(componentName: string) {
     let component = null;
     switch (componentName) {
-      case "login":
-        component = LoginComponent;
-        break;
-      case "register":
-        component = RegisterComponent;
-        break;
       case "logout":
         component = LogoutComponent;
         break;
+      case "reset-password":
+        component = ResetPasswordComponent;
+        break;
     }
 
-    if (component) this.dialog.open(component, { width: "500px" });
+    if (component) {
+      const dialogRef = this.dialog.open(component,
+        {
+          minWidth: '250px',
+          maxWidth: "500px"
+        }
+      );
+      dialogRef.afterClosed().subscribe(result => {
+        setTimeout(() => {
+          console.log('The dialog was closed');
+          if (result !== "") this.openDialog(result);
+        }, 100);
+      });
+    };
   }
 
 }

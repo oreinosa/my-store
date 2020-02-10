@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-12 text-center">
+    <!-- FIRST ROW FOR COLUMN INDEX -->
+    <div class='row'>
+      <div class="border cell index-cell" style='width:5%'>
+      </div>
+      <ng-container *ngFor='let col of grid[0];let i=index'>
+        <div class="border cell index-cell" [ngStyle]="{'width.%': width}">
+          {{ i }}
+        </div>
+      </ng-container>
+    </div>
+    <!-- CREATE ROWS FOR GRID -->
+    <ng-container *ngFor='let row of grid;let i=index'>
+      <div class="row">
+        <!-- FIRST COLUMN FOR ROW INDEX -->
+        <div class="border cell index-cell" style='width:5%'>
+          {{ i }}
+        </div>
+        <!-- TABLE COLUMNS -->
+        <ng-container *ngFor='let table of row;let k=index'>
+          <div class="border cell" [ngStyle]="{'width.%': width}" [ngClass]='{"active": !!table, "selected": table?.label === selectedTable?.label }' (click)='!!table ? onSelectTable(table) : false'>
+            {{ table?.label }}
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>

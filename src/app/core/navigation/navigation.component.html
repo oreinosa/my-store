@@ -1,42 +1,132 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="screenSize  < 3 ? 'dialog' : 'navigation'"
-    [mode]="screenSize  < 3 ? 'over' : 'side'" [opened]="screenSize  < 3 === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <ng-container *ngFor='let link of links'>
-        <a mat-list-item [routerLink]='link.path' routerLinkActive='active'>
-          {{ link.label }}
-        </a>
-      </ng-container>
-      <mat-divider></mat-divider>
-      <ng-container *ngIf='!user; else loggedIn'>
-        <a mat-list-item (click)='openDialog("login")'>
-          Login
-        </a>
-        <a mat-list-item (click)='openDialog("register")'>
-          Register
-        </a>
-      </ng-container>
-      <ng-template #loggedIn>
-        <a mat-list-item routerLink='profile' routerLinkActive='active'>
-          My profile
-        </a>
-        <a mat-list-item (click)='openDialog("logout")'>
-          Logout
-        </a>
-      </ng-template>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span class='ml-3'>My Store</span>
-    </mat-toolbar>
-    <!-- Add Content Here -->
-    <div class="container">
-      <ng-content></ng-content>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<ng-container *ngIf='user;else needLogin'>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="screenSize  < 3 ? 'dialog' : 'navigation'" [mode]="screenSize  < 3 ? 'over' : 'side'">
+      <mat-toolbar>Menu</mat-toolbar>
+      <mat-nav-list>
+        <ng-container *ngFor='let link of routes.left'>
+          <ng-container *ngIf='link?.children; else isOnlyLink'>
+            <a mat-list-item (click)='link.isOpened = !link.isOpened'>
+              <mat-icon *ngIf='link?.icon'>{{ link.icon }}</mat-icon>
+              {{ link.label }}
+              <mat-icon class='float-right'>{{ link?.isOpened ? "arrow_drop_down" : "arrow_drop_up"}}</mat-icon>
+            </a>
+          </ng-container>
+          <ng-template #isOnlyLink>
+            <a mat-list-item [routerLink]='link.path' routerLinkActive='active' (click)='drawer.close()'>
+              <mat-icon *ngIf='link?.icon'>{{ link.icon }}</mat-icon>
+              {{ link.label }}
+            </a>
+          </ng-template>
+        </ng-container>
+        <mat-divider></mat-divider>
+        <ng-container *ngFor='let link of routes.right'>
+          <ng-container *ngIf='link?.children; else isOnlyLink'>
+            <a mat-list-item (click)='link.isOpened = !link.isOpened'>
+              <mat-icon>{{ link.icon }}</mat-icon>
+              {{ link.label }}
+              <mat-icon class='float-right'>{{ link?.isOpened ? "arrow_drop_down" : "arrow_drop_up"}}</mat-icon>
+            </a>
+            <ng-container *ngIf='link?.isOpened'>
+              <a mat-list-item class='pl-5' [routerLink]='[link.path,subLink.path]' routerLinkActive='active' (click)='drawer.close()'
+                *ngFor='let subLink of link.children'>
+                <mat-icon>{{ subLink.icon }}</mat-icon>
+                {{ subLink.label }}
+              </a>
+            </ng-container>
+          </ng-container>
+          <ng-template #isOnlyLink>
+            <ng-container *ngIf='link?.isDialog;else isLink'>
+              <a mat-list-item (click)='openDialog(link.path);drawer.close();'>
+                <mat-icon>{{ link.icon }}</mat-icon>
+                {{ link.label }}
+              </a>
+            </ng-container>
+            <ng-template #isLink>
+              <a mat-list-item [routerLink]='link.path' routerLinkActive='active' (click)='drawer.close()'>
+                <mat-icon>{{ link.icon }}</mat-icon>
+                {{ link.label }}
+              </a>
+            </ng-template>
+          </ng-template>
+        </ng-container>
+
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button type="button" aria-label="Toggle sidenav" class='menu-button' mat-icon-button (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <div class='isMobile' *ngIf='screenSize < 3;else isNotMobileLinks'>
+          <ng-container *ngFor='let link of routes.left'>
+            <ng-container *ngIf='link?.isDialog;else isLink'>
+              <button mat-icon-button type="button" (click)='openDialog(link.path)'>
+              </button>
+            </ng-container>
+            <ng-template #isLink>
+              <button mat-icon-button type="button" [routerLink]='link.path' routerLinkActive='active'>
+                <mat-icon>{{ link.icon }}</mat-icon>
+              </button>
+            </ng-template>
+          </ng-container>
+        </div>
+        <ng-template #isNotMobileLinks>
+          <span class='mx-3'>My Store</span>
+          <ng-container *ngFor='let link of routes.left'>
+            <ng-container *ngIf='link?.isDialog;else isLink'>
+              <button mat-button type="button" (click)='openDialog(link.path)'>
+                <mat-icon>{{ link.icon }}</mat-icon>
+                <ng-container *ngIf='screenSize > 2'>{{ link.label }}</ng-container>
+              </button>
+            </ng-container>
+            <ng-template #isLink>
+              <button mat-button type="button" [routerLink]='link.path' routerLinkActive='active'>
+                <mat-icon>{{ link.icon }}</mat-icon>
+                <ng-container *ngIf='screenSize > 2'>{{ link.label }}</ng-container>
+              </button>
+            </ng-template>
+          </ng-container>
+        </ng-template>
+        <span class="spacer"></span>
+        <div class='isMobile' *ngIf='screenSize < 3;else isNotMobileActions'>
+          <ng-container *ngFor='let link of routes.right'>
+            <ng-container *ngIf='link?.isDialog;else isLink'>
+              <button mat-icon-button type="button" (click)='openDialog(link.path)'>
+                <mat-icon>{{ link.icon }}</mat-icon>
+              </button>
+            </ng-container>
+            <ng-template #isLink>
+              <button mat-icon-button type="button" [routerLink]='link.path' routerLinkActive='active'>
+                <mat-icon>{{ link.icon }}</mat-icon>
+              </button>
+            </ng-template>
+          </ng-container>
+        </div>
+        <ng-template #isNotMobileActions>
+          <ng-container *ngFor='let link of routes.right'>
+            <ng-container *ngIf='link?.isDialog;else isLink'>
+              <button mat-button type="button" (click)='openDialog(link.path)'>
+                <mat-icon>{{ link.icon }}</mat-icon>
+                <ng-container *ngIf='screenSize > 2'>{{ link.label }}</ng-container>
+              </button>
+            </ng-container>
+            <ng-template #isLink>
+              <button mat-button type="button" [routerLink]='link.path' routerLinkActive='active'>
+                <mat-icon>{{ link.icon }}</mat-icon>
+                <ng-container *ngIf='screenSize > 2'>{{ link.label }}</ng-container>
+              </button>
+            </ng-template>
+          </ng-container>
+        </ng-template>
+      </mat-toolbar>
+      <!-- Add Content Here -->
+      <div class="container-fluid py-3">
+        <ng-content></ng-content>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
+<ng-template #needLogin>
+  <app-login></app-login>
+</ng-template>

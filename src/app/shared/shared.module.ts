@@ -9,15 +9,23 @@ import {
   MatCardModule,
   MatIconModule,
   MatListModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule,
+  MatSortModule,
+  MatPaginatorModule,
+  MatTabsModule,
+  MatTooltipModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [CapitalizePipe],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
@@ -26,10 +34,18 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatIconModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   exports: [
+    CapitalizePipe,
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
@@ -38,7 +54,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatIconModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SharedModule { }

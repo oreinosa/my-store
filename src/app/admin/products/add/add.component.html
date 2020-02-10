@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Add {{ documentName }}</h1>
+<form #f='ngForm'>
+  <div class="col-12 col-sm-10 col-md-9 col-lg-8 mx-auto crud-add">
+    <mat-form-field class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" [(ngModel)]='object.name' name='name' required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput rows='4' [(ngModel)]='object.description' name='description' required></textarea>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]='object.category' name='category' required>
+        <mat-option [value]="category.name" *ngFor='let category of categories | async'>
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button class='mx-2' (click)='onAdd(f.value)' [disabled]='f.invalid'>
+      Add
+    </button>
+    <button mat-button class='mx-2' mat-dialog-close>
+      Cancel
+    </button>
+  </div>
+</form>
