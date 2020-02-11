@@ -30,7 +30,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;">
         </tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 25]" (page)='pageSizeSubject.next($event.pageSize)' [pageSize]='pageSize'></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25]" (page)='pageSizeSubject.next($event.pageSize)'></mat-paginator>
     </ng-container>
     <ng-template #noProducts>
       <h3 class='text-center' *ngIf='!products?.length'>No products added yet!</h3>

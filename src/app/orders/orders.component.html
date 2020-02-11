@@ -61,7 +61,7 @@
             </tr>
           </table>
 
-          <mat-paginator [pageSizeOptions]="[5, 10, 25]" (page)='pageSizeSubject.next($event.pageSize)' [pageSize]='pageSize'></mat-paginator>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25]" (page)='pageSizeSubject.next($event.pageSize)'></mat-paginator>
         </div>
         <ng-template #loadingOrders>
           <mat-spinner class="mx-auto"></mat-spinner>
