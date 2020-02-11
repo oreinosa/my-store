@@ -31,13 +31,14 @@ export class OrdersService {
     this.currentOrder.next(order);
   }
 
-  getActiveOrders(): Observable<Order[]> {
+  getActiveOrders(limit: number = 5): Observable<Order[]> {
     // const currentTime = new Date();
     // const lastHours = new Date(currentTime.getTime() - (1000 * 60 * 180));
     this.ordersCollection = this.af
       .collection('orders', ref => ref
         .where('active', "==", true)
         .orderBy("createdAt", "desc")
+        .limit(limit)
       );
 
     return this.ordersCollection.snapshotChanges().pipe(
@@ -54,9 +55,9 @@ export class OrdersService {
     return currentOrder ? this.getActiveOrder() : this.getOrder(id);
   }
 
-  getOrderProducts(id: string): Observable<Product[]> {
+  getOrderProducts(id: string, limit: number = 5): Observable<Product[]> {
     this.orderDocument = this.ordersCollection.doc(id);
-    return this.orderDocument.collection('products').valueChanges();
+    return this.orderDocument.collection('products', ref => ref.orderBy('createdAt', "desc").limit(limit)).valueChanges();
   }
 
 }

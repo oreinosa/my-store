@@ -2,12 +2,11 @@
   <div class="col-12">
     <ng-container *ngIf='categories$ | async as categories;else loadingCategories'>
       <mat-nav-list>
-        <a mat-list-item (click)='onSelectCategory({name:"All"})'
-          [ngClass]='{"active": activeCategory?.name === "All"}'>
+        <h3 mat-subheader>Categories</h3>
+        <a mat-list-item (click)='onSelectCategory({name:"All"})' [ngClass]='{"active": activeCategory?.name === "All"}'>
           All
         </a>
-        <a mat-list-item *ngFor='let category of categories' (click)='onSelectCategory(category)'
-          [ngClass]='{"active": activeCategory?.name === category.name}'>
+        <a mat-list-item *ngFor='let category of categories' (click)='onSelectCategory(category)' [ngClass]='{"active": activeCategory?.name === category.name}'>
           {{ category.name }}
         </a>
       </mat-nav-list>

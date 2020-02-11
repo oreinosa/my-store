@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/shared/models/product.model';
-import { OrderRecord } from 'src/app/shared/models/order-record.model';
 import { OrderService } from '../../order.service';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-add-product',
@@ -19,7 +19,8 @@ export class AddProductComponent implements OnInit {
   }
 
   selectProduct(name: string, amount: number, price: number) {
-    this.orderService.addRecord({ name, amount, price });
+    const createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    this.orderService.addRecord({ name, amount, price, createdAt });
   }
 
 }

@@ -1,4 +1,4 @@
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Order } from '../shared/models/order.model';
 import { OrdersService } from '../orders/orders.service';
@@ -55,6 +55,17 @@ export class OrderService {
     } catch (e) {
       throw e;
     }
+  }
+
+  addOrderRecords(orderId: string, records: OrderRecord[]): Promise<void> {
+    const batch = this.af.firestore.batch();
+    let doc: DocumentReference;
+    for (let record of records) {
+      doc = this.ordersCollection.doc<Order>(orderId).collection<Product>(this.productsCollectioName).doc(this.af.createId()).ref;
+      batch.set(doc, record);
+    }
+    // run HTTP function to update total 
+    return batch.commit();
   }
 
   getProducts(category: string = "All"): Observable<Product[]> {

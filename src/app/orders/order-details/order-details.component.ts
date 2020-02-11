@@ -14,12 +14,9 @@ import { ViewOrder } from 'src/app/shared/classes/view-order';
 })
 export class OrderDetailsComponent {
   @Input() order: Order;
-  @Input() products: Product[];
-  displayedColumns = ["name", "price", "amount", "total"];
-
   constructor(
-    public ordersService: OrdersService
   ) {
   }
+
 
 }

@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-12 col-sm-8 col-md-7 col-lg-9 mx-auto mb-3">
+    <mat-card>
+      <h3 class="text-center">
+        Welcome to My Store
+      </h3>
+    </mat-card>
+  </div>
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto feature" routerLink='order'>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>add_circle</mat-icon> Order
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h6>Create a new order</h6>
+        <mat-list>
+          <h3 mat-subheader>Steps to create a new order</h3>
+          <mat-list-item>Select the order type: in, pick up or carry up</mat-list-item>
+          <mat-list-item>Select the amount of guests (default: 2)</mat-list-item>
+          <mat-list-item>If the order type is "in", please select the table from the map.</mat-list-item>
+          <mat-list-item>Confirm the order</mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto feature" routerLink='orders'>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>receipt</mat-icon> Orders
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Check the active orders</p>
+        <p>From the table, you can attend, view or pay active orders.</p>
+        <p>When attending, you'll see the order and a menu to add products</p>
+        <p>When viewing, you'll see the receipt</p>
+        <p>When paying, you'll confirm the payment method and close the order</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto feature" routerLink='admin'>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>build</mat-icon> Admin
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Administer the content of your restaurant</p>
+        <p>Users: control access to the app and roles in your restaurant</p>
+        <p>Products: add the products you sell</p>
+        <p>Categories: separate products by categories</p>
+        <p>Tables: add tables and use them in your restaurant layout</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,10 +1,21 @@
 .cell{
   height:50px;
-  &.selected{
-    background-color: green;
+  padding: 10px 5px;
+  font-size: 10px;
+  line-height: 10px;
+  .mat-icon{
+    font-size: 10px;
+    line-height: 10px;  
   }
-  &.not-available{
-    cursor: not-allowed;
-    background-color: gray;
+  &.table-button{
+    cursor: pointer;
+    background-color: lightgreen;
+    &.selected{
+      background-color: green;
+    }
+    &.not-available{
+      cursor: not-allowed;
+      background-color: lightgray;
+    }
   }
 }

@@ -22,19 +22,20 @@
           <ng-container *ngFor='let table of row;let k=index'>
             <div [ngStyle]="{'width.%': width}">
               <ng-container *ngIf='table;else emptyCell'>
-                <button [matTooltip]='table.seats+" seats"' mat-button class="border cell table" [ngClass]='{"selected": table?.label === selectedTable?.label, "not-available": table.seats < guests }'
+                <div class="border cell table-button" [ngClass]='{"selected": table?.label === selectedTable?.label, "not-available": table.seats < guests }'
                   (click)='onSelectTable(table)'>
-                  # {{ table?.label }}
-                </button>
+                  <div class='mb-1'>
+                    # {{ table?.label }}
+                  </div>
+                  <div>
+                    <mat-icon>event_seat</mat-icon>{{ table?.seats }}
+                  </div>
+                </div>
               </ng-container>
               <ng-template #emptyCell>
                 <div class="border cell"></div>
               </ng-template>
-
             </div>
-
-
-
           </ng-container>
         </div>
       </ng-container>

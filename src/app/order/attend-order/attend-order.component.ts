@@ -4,9 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { takeUntil, map, tap, switchMap, take } from 'rxjs/operators';
 import { Order } from 'src/app/shared/models/order.model';
-import { ViewOrder } from 'src/app/shared/classes/view-order';
 import { Product } from 'src/app/shared/models/product.model';
-import { OrderRecord } from 'src/app/shared/models/order-record.model';
 import { OrderService } from '../order.service';
 
 @Component({
@@ -17,15 +15,14 @@ import { OrderService } from '../order.service';
 export class AttendOrderComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   order: Order;
+  id: string;
   products: Observable<Product[]>;
-
   addingProducts = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     public ordersService: OrdersService,
-    private orderService: OrderService
   ) {
   }
 
@@ -35,20 +32,15 @@ export class AttendOrderComponent implements OnInit {
       map(params => params.get('id')),
       tap(id => {
         if (!id) this.router.navigate(['/orders']);
+        else this.id = id;
       }),
       switchMap(id => this.ordersService.getOrder(id)),
       take(1)
     )
       .subscribe(order => {
+        console.log(order);
         this.order = order;
-        this.products = this.ordersService.getOrderProducts(order.id);
       });
-
-
-    this.orderService.getAddedRecord().pipe(
-      takeUntil(this.ngUnsubscribe),
-    )
-      .subscribe(record => this.addRecord(record));
   }
 
   ngOnDestroy() {
@@ -56,10 +48,4 @@ export class AttendOrderComponent implements OnInit {
     this.ngUnsubscribe.complete();
     this.ordersService.setActiveOrder(null);
   }
-
-  async addRecord(record: OrderRecord) {
-    const id = await this.orderService.addOrderRecord(this.order.id, record);
-    console.log(id);
-  }
-
 }

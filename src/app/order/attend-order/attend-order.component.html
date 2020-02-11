@@ -7,22 +7,43 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <app-order-details [order]='order' [products]='products | async'></app-order-details>
+        <ng-container *ngIf='order;else loadingOrder'>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <app-order-details [order]='order'></app-order-details>
+            </div>
+            <div class="col-12 col-md-6">
+              <app-order-products [order]='order'></app-order-products>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #loadingOrder>
+          <mat-spinner class="mx-auto"></mat-spinner>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="col-12">
+  <div class="col-12 col-md-6 mb-3" *ngIf='addingProducts && order'>
     <mat-card>
       <mat-card-header>
         <mat-card-title>
-          <button mat-icon-button type='button' (click)='addingProducts = !addingProducts'>
-            <mat-icon>{{ addingProducts ? "arrow_drop_down" :"arrow_drop_up"}}</mat-icon>
-          </button>
-          Add products
+          Adding products
         </mat-card-title>
       </mat-card-header>
-      <mat-card-content *ngIf='addingProducts'>
-        <app-add-products></app-add-products>
+      <mat-card-content>
+        <app-added-products [id]='order.id' (addedRecords)='addingProducts = false'></app-added-products>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-12 col-md-6 ">
+    <mat-card>
+      <mat-card-content>
+        <button mat-button type='button' class='full-width' (click)='addingProducts = true' *ngIf='!addingProducts;else addProductsTemplate'>
+          <mat-icon>add</mat-icon>Add products
+        </button>
+        <ng-template #addProductsTemplate>
+          <app-add-products></app-add-products>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>

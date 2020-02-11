@@ -72,7 +72,7 @@
           </ng-container>
         </div>
         <ng-template #isNotMobileLinks>
-          <span class='mx-3'>My Store</span>
+          <span class='mx-3 app-title' routerLink='/'>My Store</span>
           <ng-container *ngFor='let link of routes.left'>
             <ng-container *ngIf='link?.isDialog;else isLink'>
               <button mat-button type="button" (click)='openDialog(link.path)'>

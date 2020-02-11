@@ -10,10 +10,11 @@ import { OrdersModule } from '../orders/orders.module';
 import { AddProductsComponent } from './add-products/add-products.component';
 import { AddProductComponent } from './add-products/add-product/add-product.component';
 import { ProductCategoriesComponent } from './add-products/product-categories/product-categories.component';
+import { AddedProductsComponent } from './added-products/added-products.component';
 
 
 @NgModule({
-  declarations: [OrderComponent, AttendOrderComponent, AddProductsComponent, AddProductComponent, ProductCategoriesComponent],
+  declarations: [OrderComponent, AttendOrderComponent, AddProductsComponent, AddProductComponent, ProductCategoriesComponent, AddedProductsComponent],
   imports: [
     SharedModule,
     TablesModule,

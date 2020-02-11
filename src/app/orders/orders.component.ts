@@ -1,43 +1,49 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { ViewOrderComponent } from './view-order/view-order.component';
+import { ViewOrderDialogComponent } from './view-order-dialog/view-order-dialog.component';
 import { OrdersService } from './orders.service';
 import { Order } from './../shared/models/order.model';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
-import { Subject } from 'rxjs';
-import { takeUntil, tap, map } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatTableDataSource, MatDialog, MatSort, MatPaginator } from '@angular/material';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { takeUntil, tap, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  styleUrls: ['./orders.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class OrdersComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   displayedColumns = ["type", "guests", "waiter", "total", "createdAt", "actions"];
   dataSource = new MatTableDataSource<Order>();
+  orders: Order[] = [];
+  orders$: Observable<Order[]>;
+  pageSizeSubject = new BehaviorSubject(5);
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   constructor(
     private ordersService: OrdersService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private router:Router
+    private router: Router
   ) { }
 
   ngOnInit() {
-    // this.ordersService.getActiveOrder().pipe(
-    //   takeUntil(this.ngUnsubscribe)
-    // )
-    //   .subscribe(order => {
-    //     if (order) {
-    //       this.onViewOrder(order);
-    //     }
-    //   })
-
-    this.ordersService.getActiveOrders().pipe(
+    this.orders$ = this.pageSizeSubject.pipe(
       takeUntil(this.ngUnsubscribe),
-      tap(orders => console.log(orders))
-    )
-      .subscribe(orders => this.dataSource.data = orders);
+      switchMap(pageSize => this.ordersService.getActiveOrders(pageSize)),
+      takeUntil(this.ngUnsubscribe),
+      tap(orders => {
+        console.log(orders);
+        this.orders = orders;
+        this.dataSource.data = orders;
+      })
+    );
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnDestroy() {
@@ -46,7 +52,7 @@ export class OrdersComponent implements OnInit {
   }
 
   onViewOrder(order: Order) {
-    this.dialog.open(ViewOrderComponent, { data: order });
+    this.dialog.open(ViewOrderDialogComponent, { data: order, maxWidth: "800px", minWidth: "300px" });
   }
 
   onAttendOrder(order: Order) {
