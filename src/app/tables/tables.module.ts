@@ -16,6 +16,6 @@ import { GuestLimitPipe } from './availability/guest-limit.pipe';
     TablesRoutingModule
   ],
   entryComponents: [EditCellComponent],
-  exports: [AvailabilityComponent, LayoutComponent, EditComponent]
+  exports: [AvailabilityComponent, EditComponent]
 })
 export class TablesModule { }

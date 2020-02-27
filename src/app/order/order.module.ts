@@ -21,6 +21,7 @@ import { AddedProductsComponent } from './added-products/added-products.componen
     OrdersModule,
     MatStepperModule,
     OrderRoutingModule
-  ]
+  ],
+  exports: [AttendOrderComponent]
 })
 export class OrderModule { }

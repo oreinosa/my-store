@@ -8,3 +8,9 @@ td.mat-cell, th.mat-header-cell{
 mat-paginator div.mat-paginator-range-actions{
   display:none;
 }
+.orders-container .mat-card-content{
+  overflow-x: auto;
+}
+.table-container{
+  min-width: 600px;
+}

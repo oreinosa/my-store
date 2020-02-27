@@ -1,15 +1,14 @@
 <form #f='ngForm'>
   <div class="row text-center">
-    <div class="col-12 mb-3">
-      <div class="col-12 col-sm-6 pl-0">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>Create a new order</mat-card-title>
-          </mat-card-header>
-        </mat-card>
-      </div>
+    <div class="col-12 col-sm-6 col-md-5 offset-md-1 col-lg-4 offset-lg-2 col-xl-3 offset-xl-3 mb-3">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Create a new order</mat-card-title>
+        </mat-card-header>
+      </mat-card>
     </div>
-    <div class="col-12 col-sm-6 col-xl-4 mb-3">
+    <div class="w-100"></div>
+    <div class="col-12 col-sm-6 col-md-5 offset-md-1 col-lg-4 offset-lg-2 col-xl-3 offset-xl-3 mb-3">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -28,7 +27,7 @@
         </mat-card-actions> -->
       </mat-card>
     </div>
-    <div class="col-12 col-sm-6 col-xl-4 mb-3">
+    <div class="col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3 mb-3">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -48,7 +47,8 @@
       </mat-card>
     </div>
     <ng-container *ngIf='order.type === "In"'>
-      <div class="col-12 col-sm-12 col-xl-4 mb-3">
+      <div class="w-100"></div>
+      <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 mb-3">
         <mat-card>
           <mat-card-header>
             <mat-card-title>
@@ -59,7 +59,9 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content *ngIf='showTable'>
-            <app-table-availability (selectTable)='order.table = $event.label' [guests]='order.guests'></app-table-availability>
+            <div class="tables-container">
+              <app-table-availability (selectTable)='order.table = $event.label' [guests]='order.guests'></app-table-availability>
+            </div>
             <input type="hidden" [(ngModel)]='order.table' name='table' #table='ngModel' required>
           </mat-card-content>
           <!-- <mat-card-actions>
@@ -69,7 +71,8 @@
         </mat-card>
       </div>
     </ng-container>
-    <div class="col-12 col-sm-6 col-xl-1 mb-3">
+    <div class="w-100"></div>
+    <div class="col-12 col-sm-6 col-md-5 offset-md-1 col-lg-4 offset-lg-2 col-xl-3 offset-xl-3 mb-3">
       <mat-card>
         <mat-card-header>
           <mat-card-title>

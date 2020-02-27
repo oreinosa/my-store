@@ -1,6 +1,5 @@
 <div class="row">
-
-  <div class="col-12 col-md-10 mx-auto">
+  <div class="col-12 orders-container col-md-10 mx-auto">
     <mat-card>
       <mat-card-header>
         <mat-card-title>
@@ -8,7 +7,7 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="mat-elevation-z0" *ngIf='orders$ | async as orders;else loadingOrders'>
+        <div class="mat-elevation-z0 table-container" *ngIf='orders$ | async as orders;else loadingOrders'>
           <table mat-table [dataSource]="dataSource">
             <!-- type Column -->
             <ng-container matColumnDef="type">
@@ -69,5 +68,8 @@
       </mat-card-content>
     </mat-card>
 
+  </div>
+  <div class="col-12 mt-3">
+    <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,49 +1,49 @@
-<div class="row">
-  <ng-container *ngIf='grid.length;else loadingGrid'>
-    <div class="col-12 text-center">
-      <!-- FIRST ROW FOR COLUMN INDEX -->
-      <div class='row'>
-        <div class="border cell index-cell" style='width:5%'>
-        </div>
-        <ng-container *ngFor='let col of grid[0];let i=index'>
-          <div class="border cell index-cell" [ngStyle]="{'width.%': width}">
-            {{ i }}
-          </div>
-        </ng-container>
-      </div>
-      <!-- CREATE ROWS FOR GRID -->
-      <ng-container *ngFor='let row of grid;let i=index'>
-        <div class="row">
-          <!-- FIRST COLUMN FOR ROW INDEX -->
+  <!-- <div class="row"> -->
+    <ng-container *ngIf='grid.length;else loadingGrid'>
+      <div class="text-center tables-container">
+        <!-- FIRST ROW FOR COLUMN INDEX -->
+        <div class='row'>
           <div class="border cell index-cell" style='width:5%'>
-            {{ i }}
           </div>
-          <!-- TABLE COLUMNS -->
-          <ng-container *ngFor='let table of row;let k=index'>
-            <div [ngStyle]="{'width.%': width}">
-              <ng-container *ngIf='table;else emptyCell'>
-                <div class="border cell table-button" [ngClass]='{"selected": table?.label === selectedTable?.label, "not-available": table.seats < guests }'
-                  (click)='onSelectTable(table)'>
-                  <div class='mb-1'>
-                    # {{ table?.label }}
-                  </div>
-                  <div>
-                    <mat-icon>event_seat</mat-icon>{{ table?.seats }}
-                  </div>
-                </div>
-              </ng-container>
-              <ng-template #emptyCell>
-                <div class="border cell"></div>
-              </ng-template>
+          <ng-container *ngFor='let col of grid[0];let i=index'>
+            <div class="border cell index-cell" [ngStyle]="{'width.%': width}">
+              {{ i }}
             </div>
           </ng-container>
         </div>
-      </ng-container>
-    </div>
-  </ng-container>
-  <ng-template #loadingGrid>
-    <div class="col-12 mx-auto">
-      <mat-spinner></mat-spinner>
-    </div>
-  </ng-template>
-</div>
+        <!-- CREATE ROWS FOR GRID -->
+        <ng-container *ngFor='let row of grid;let i=index'>
+          <div class="row">
+            <!-- FIRST COLUMN FOR ROW INDEX -->
+            <div class="border cell index-cell" style='width:5%'>
+              {{ i }}
+            </div>
+            <!-- TABLE COLUMNS -->
+            <ng-container *ngFor='let table of row;let k=index'>
+              <div [ngStyle]="{'width.%': width}">
+                <ng-container *ngIf='table;else emptyCell'>
+                  <div class="border cell table-button" [ngClass]='{"selected": table?.label === selectedTable?.label, "not-available": table.seats < guests }'
+                    (click)='onSelectTable(table)'>
+                    <div class='mb-1'>
+                      # {{ table?.label }}
+                    </div>
+                    <div>
+                      <mat-icon>event_seat</mat-icon>{{ table?.seats }}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #emptyCell>
+                  <div class="border cell"></div>
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #loadingGrid>
+      <div class="col-12 mx-auto">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-template>
+  <!-- </div> -->
