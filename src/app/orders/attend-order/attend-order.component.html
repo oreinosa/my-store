@@ -9,9 +9,9 @@
       <mat-card-content>
         <ng-container *ngIf='order;else loadingOrder'>
           <div class="row">
-            <div class="col-12 col-md-6">
+            <!-- <div class="col-12 col-md-6">
               <app-order-details [order]='order'></app-order-details>
-            </div>
+            </div> -->
             <div class="col-12 col-md-6">
               <app-order-products [order]='order'></app-order-products>
             </div>
@@ -31,7 +31,7 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <app-added-products [id]='order.id' (addedRecords)='addingProducts'></app-added-products>
+        <app-added-products [id]='order.id'></app-added-products>
       </mat-card-content>
     </mat-card>
   </div>

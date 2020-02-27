@@ -51,8 +51,10 @@ export class OrdersService {
   }
 
   getActiveOrder(id?: string): Observable<Order> {
-    const currentOrder = this.currentOrder.getValue();
-    return currentOrder ? this.getActiveOrder() : this.getOrder(id);
+    if (id) {
+      return this.getOrder(id);
+    }
+    return this.currentOrder.asObservable();
   }
 
   getOrderProducts(id: string, limit: number = 5): Observable<Product[]> {

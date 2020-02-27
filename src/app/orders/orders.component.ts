@@ -5,7 +5,7 @@ import { Order } from './../shared/models/order.model';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource, MatDialog, MatSort, MatPaginator } from '@angular/material';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
-import { takeUntil, tap, map, switchMap } from 'rxjs/operators';
+import { takeUntil, tap, map, switchMap, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-orders',
@@ -21,6 +21,8 @@ export class OrdersComponent implements OnInit {
   orders$: Observable<Order[]>;
   pageSizeSubject = new BehaviorSubject(5);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  currentOrder$: Observable<Order>;
 
   constructor(
     private ordersService: OrdersService,
@@ -40,6 +42,14 @@ export class OrdersComponent implements OnInit {
         this.dataSource.data = orders;
       })
     );
+
+    this.currentOrder$ = this.route.paramMap.pipe(
+      takeUntil(this.ngUnsubscribe),
+      map(params => params.get('id')),
+      switchMap(id => this.ordersService.getActiveOrder(id)),
+      tap(order => console.log(order))
+    );
+
   }
 
   ngAfterViewInit(): void {
@@ -47,6 +57,7 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.ordersService.setActiveOrder(null);
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }

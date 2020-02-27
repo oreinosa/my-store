@@ -4,7 +4,7 @@ import { Order } from '../shared/models/order.model';
 import { OrdersService } from '../orders/orders.service';
 import { Product } from '../shared/models/product.model';
 import { take } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Category } from '../shared/models/category.model';
 import { OrderRecord } from '../shared/models/order-record.model';
 
@@ -19,7 +19,7 @@ export class OrderService {
   private productsCollection: AngularFirestoreCollection<Product>;
   private categoriesCollection: AngularFirestoreCollection<Category>;
 
-  private addRecordSubject = new Subject<OrderRecord>();
+  private addedRecordsSubject = new BehaviorSubject<OrderRecord[]>([]);
 
   constructor(
     private af: AngularFirestore,
@@ -41,11 +41,11 @@ export class OrderService {
   }
 
   addRecord(record: OrderRecord) {
-    this.addRecordSubject.next(record);
+    this.addedRecordsSubject.next([record, ...this.addedRecordsSubject.value]);
   }
 
-  getAddedRecord() {
-    return this.addRecordSubject.asObservable();
+  getAddedRecords() {
+    return this.addedRecordsSubject.asObservable();
   }
 
   async addOrderRecord(orderId: string, record: OrderRecord) {
@@ -57,15 +57,20 @@ export class OrderService {
     }
   }
 
-  addOrderRecords(orderId: string, records: OrderRecord[]): Promise<void> {
-    const batch = this.af.firestore.batch();
-    let doc: DocumentReference;
-    for (let record of records) {
-      doc = this.ordersCollection.doc<Order>(orderId).collection<Product>(this.productsCollectioName).doc(this.af.createId()).ref;
-      batch.set(doc, record);
+  async addOrderRecords(orderId: string, records: OrderRecord[]): Promise<void> {
+    try {
+      const batch = this.af.firestore.batch();
+      let doc: DocumentReference;
+      for (let record of records) {
+        doc = this.ordersCollection.doc<Order>(orderId).collection<Product>(this.productsCollectioName).doc(this.af.createId()).ref;
+        batch.set(doc, record);
+      }
+      // run HTTP function to update total 
+      await batch.commit();
+      this.addedRecordsSubject.next([]);
+    } catch (e) {
+      console.log(e);
     }
-    // run HTTP function to update total 
-    return batch.commit();
   }
 
   getProducts(category: string = "All"): Observable<Product[]> {

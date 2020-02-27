@@ -62,8 +62,8 @@
             <div class="tables-container">
               <app-table-availability (selectTable)='order.table = $event.label' [guests]='order.guests'></app-table-availability>
             </div>
-            <input type="hidden" [(ngModel)]='order.table' name='table' #table='ngModel' required>
           </mat-card-content>
+          <input type="hidden" [(ngModel)]='order.table' name='table' #table='ngModel' required>
           <!-- <mat-card-actions>
                 <button mat-button (click)='step = step - 1'>Back</button>
                 <button mat-button (click)='step = step + 1' [disabled]='!order.table'>Next</button>

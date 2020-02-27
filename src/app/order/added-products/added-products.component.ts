@@ -14,10 +14,9 @@ export class AddedProductsComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   orderRecords: OrderRecord[] = [];
   @Input() id: string;
-  @Output() addedRecords = new EventEmitter();
   displayedColumns = ["name", "price", "amount", "total"];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
+  addingProducts = false;
 
   constructor(
     private orderService: OrderService
@@ -25,11 +24,11 @@ export class AddedProductsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.id);
-    this.orderService.getAddedRecord().pipe(
+    this.orderService.getAddedRecords().pipe(
       takeUntil(this.ngUnsubscribe),
       tap(console.log)
     )
-      .subscribe(record => this.orderRecords = [record, ...this.orderRecords])
+      .subscribe(orderRecords => this.orderRecords = orderRecords)
   }
 
   ngOnDestroy() {
@@ -39,8 +38,9 @@ export class AddedProductsComponent implements OnInit {
 
   async addRecords() {
     try {
+      this.addingProducts = true;
       await this.orderService.addOrderRecords(this.id, this.orderRecords);
-      this.addedRecords.emit();
+      this.addingProducts = false;
     } catch (e) {
       console.log(e);
     }

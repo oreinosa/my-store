@@ -14,7 +14,8 @@ import { takeUntil, switchMap, tap } from 'rxjs/operators';
 export class OrderProductsComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   @Input() order: Order;
-  products$: Observable<Order[]>;
+  products$: Observable<Product[]>;
+  products: Product[] = [];
   showProducts = false;
   pageSizeSubject = new BehaviorSubject(5);
   displayedColumns = ["name", "price", "amount", "total"];
@@ -27,5 +28,9 @@ export class OrderProductsComponent implements OnInit {
     this.products$ = this.pageSizeSubject.pipe(
       switchMap(pageSize => this.ordersService.getOrderProducts(this.order.id, pageSize)),
     );
+  }
+
+  getTotalCost() {
+    return this.products.map(t => t.price).reduce((acc, value) => acc + value, 0);
   }
 }

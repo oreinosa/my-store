@@ -27,6 +27,7 @@ export class OrderComponent implements OnInit {
       status: "New",
       active: true,
       total: 0,
+      table: "",
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
   }

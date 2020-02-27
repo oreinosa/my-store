@@ -28,9 +28,15 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
-  <h3 class='text-center' *ngIf='!orderRecords?.length'>No products added yet!</h3>
+  <h4 class='text-center' *ngIf='!orderRecords?.length'>No products added yet!</h4>
   <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
 </div>
-<button mat-button class='full-width' (click)='addRecords()'>
-  Add products
-</button>
+<ng-container *ngIf='addingProducts; else addProductsButton'>
+  <h4 class='text-center'>Adding products...</h4>
+  <mat-spinner class="mx-auto"></mat-spinner>
+</ng-container>
+<ng-template #addProductsButton>
+  <button mat-button class='full-width' (click)='addRecords()'>
+    Add products
+  </button>
+</ng-template>
